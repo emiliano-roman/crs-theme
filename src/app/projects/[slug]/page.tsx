@@ -71,8 +71,8 @@ const ProjectDetailPage = () => {
               key={index}
               src={`https://d2llx07cilb2cs.cloudfront.net/${image}`} // URL completa de CloudFront
               alt={`Imagen del proyecto ${project.title} - ${index + 1}`}
-              width={1200}
-              height={800}
+              width={1400}
+              height={1000}
               style={{ width: '100%', height: 'auto' }}
               decoding="async" // Decodificación asíncrona
             />
