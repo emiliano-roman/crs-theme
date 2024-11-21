@@ -1,20 +1,12 @@
 // src/app/expertise/page.tsx
-"use client";  // Indica que este es un componente de cliente
-
-import { useEffect } from 'react';
-import { useLenis } from '../../../lib/lenis-config';
-import { useSplitText } from '../../../lib/split-type-config';
-import { gsap } from 'gsap';
+"use client"; // Este archivo es un componente cliente
 
 export default function ExpertisePage() {
-  useLenis();
-  useSplitText();
-
   return (
     <div>
       <h1>Expertise Page</h1>
-       <h1>Expertise Page</h1>
-      {/* Tu contenido aquí */}
+      <h1>Contenido sobre Expertise en el sitio</h1>
+      {/* El contenido de esta página */}
     </div>
   );
 }
