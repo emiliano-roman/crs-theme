@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { metadata } from "../../lib/metadata";
 import { useLenis } from "../../lib/lenis-config";
-import { useSplitText } from "../../lib/split-type-config";
+import { useLazyLoadMedia } from "../../lib/assets-url-config";
 
 import localFont from "next/font/local";
 import "./globals.css";
@@ -26,7 +26,6 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   useLenis();
-  useSplitText();
 
   return (
     <html lang="en">

@@ -5,3 +5,9 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+module.exports = {
+  images: {
+    domains: ['d2llx07cilb2cs.cloudfront.net'], // Añadir el dominio de CloudFront
+  },
+};

@@ -4,16 +4,16 @@
       "title": "Project One",
       "slug": "project-one",
       "description": "Descripción del proyecto",
-      "images": ["image1.webp", "image2.webp"],
-      "videos": ["video1.webm"]
+      "images": ["projects/7studio/14.webp", "projects/7studio/15-1.webp"],
+      "videos": ["video1.mp4"]
     },
     {
       "id": "project-2",
       "title": "Project Two",
       "slug": "project-two",
       "description": "Otra descripción del proyecto",
-      "images": ["image3.webp", "image1.webp"],
-      "videos": ["video1.webm"]
+      "images": ["projects/oldglory/03.webp", "projects/oldglory/04.webp"],
+      "videos": ["video1.mp4"]
     }
   ]
   

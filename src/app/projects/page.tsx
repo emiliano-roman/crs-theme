@@ -19,7 +19,7 @@ const ProjectsPage = () => {
   useEffect(() => {
     // Cargar los proyectos desde el archivo JSON
     const fetchProjects = async () => {
-      const response = await fetch('/data/projects.json');  // Accedemos al archivo JSON desde /public/data/projects.json
+      const response = await fetch('/data/projects.json');  
       const data = await response.json();
       setProjects(data);
     };
@@ -29,7 +29,7 @@ const ProjectsPage = () => {
 
   return (
     <div>
-      <h1>Proyectos</h1>
+      <h1 className="split">Proyectos</h1>
       <div>
         {projects.map((project) => (
           <div key={project.id}>

@@ -1,55 +1,62 @@
-"use client"; // Este archivo también es un componente de cliente
+// ProjectDetailPage.tsx
+"use client";
 
 import { useEffect, useState } from "react";
-import { useParams } from "next/navigation"; // Cambiado de useRouter a useParams
-import Image from "next/image"; // Para optimizar imágenes
+import { useParams } from "next/navigation";
+import { useLazyLoadMedia } from "../../../../lib/assets-url-config"; // Importamos el hook para lazy load
+import Image from "next/image"; // Importamos Image de Next.js
+
+interface Project {
+  slug: string;
+  title: string;
+  description: string;
+  images: string[];
+  videos: string[];
+}
 
 const ProjectDetailPage = () => {
-  const [project, setProject] = useState<any>(null); // Estado para almacenar el proyecto
-  const [loading, setLoading] = useState<boolean>(true); // Estado para el loading
-  const [error, setError] = useState<string | null>(null); // Estado para manejar errores
-  const params = useParams(); // Obtener el parámetro 'slug' desde la URL
+  const [project, setProject] = useState<Project | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
+  const params = useParams();
+  const initializeLazyLoad = useLazyLoadMedia(); // Hook de lazy load para videos
 
   useEffect(() => {
     const fetchProject = async () => {
       try {
-        // Solo hacemos la búsqueda cuando tenemos el `slug`
         if (params.slug) {
-          const response = await fetch(`/data/projects.json`);
+          const response = await fetch("/data/projects.json");
           if (!response.ok) {
-            throw new Error("No se pudo cargar el proyecto");
+            throw new Error("Error al cargar los datos del servidor.");
           }
-          const projects = await response.json();
-          const foundProject = projects.find((p: any) => p.slug === params.slug);
-
+          const projects: Project[] = await response.json();
+          const foundProject = projects.find((p) => p.slug === params.slug);
           if (foundProject) {
             setProject(foundProject);
           } else {
             setError("Proyecto no encontrado.");
           }
         }
-      } catch (error: any) {
-        setError("Error al cargar el proyecto");
-        console.error("Error:", error);
+      } catch (error) {
+        setError("Error al cargar el proyecto.");
+        console.error("Error al cargar el proyecto:", error);
       } finally {
-        setLoading(false); // Dejar de mostrar loading una vez que se haya terminado de cargar
+        setLoading(false);
       }
     };
 
     fetchProject();
-  }, [params.slug]); // Dependencia del `slug` para recargar al cambiar la URL
+  }, [params.slug]);
 
-  if (loading) {
-    return <div>Cargando...</div>; // Estado de carga
-  }
+  useEffect(() => {
+    if (project) {
+      initializeLazyLoad(); // Inicializar lazy load para los videos
+    }
+  }, [project]);
 
-  if (error) {
-    return <div>{error}</div>; // Mostrar mensaje de error si ocurre uno
-  }
-
-  if (!project) {
-    return <div>Proyecto no encontrado</div>; // Caso en que no se encuentra el proyecto
-  }
+  if (loading) return <div>Cargando proyecto...</div>;
+  if (error) return <div>{error}</div>;
+  if (!project) return <div>Proyecto no encontrado.</div>;
 
   return (
     <div>
@@ -59,31 +66,36 @@ const ProjectDetailPage = () => {
       <div>
         <h2>Imágenes</h2>
         {project.images.length > 0 ? (
-          project.images.map((image: string, index: number) => (
+          project.images.map((image, index) => (
             <Image
               key={index}
-              src={`/images/${image}`}
-              alt={`Imagen del proyecto ${project.title}`}
-              width={600}
-              height={400}
+              src={`https://d2llx07cilb2cs.cloudfront.net/${image}`} // URL completa de CloudFront
+              alt={`Imagen del proyecto ${project.title} - ${index + 1}`}
+              width={1200}
+              height={800}
+              style={{ width: '100%', height: 'auto' }}
+              decoding="async" // Decodificación asíncrona
             />
           ))
         ) : (
-          <p>No hay imágenes disponibles</p>
+          <p>No hay imágenes disponibles para este proyecto.</p>
         )}
       </div>
 
       <div>
         <h2>Videos</h2>
         {project.videos.length > 0 ? (
-          project.videos.map((video: string, index: number) => (
-            <video key={index} controls>
-              <source src={`/videos/${video}`} type="video/webm" />
-              Tu navegador no soporta el etiquetado de video.
+          project.videos.map((video, index) => (
+            <video
+              key={index}
+              data-src={`https://d2llx07cilb2cs.cloudfront.net/${video}`} // Usamos data-src para lazy load
+              controls
+            >
+              Tu navegador no soporta el video.
             </video>
           ))
         ) : (
-          <p>No hay videos disponibles</p>
+          <p>No hay videos disponibles para este proyecto.</p>
         )}
       </div>
     </div>
