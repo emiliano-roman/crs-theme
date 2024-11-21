@@ -1,0 +1,19 @@
+[
+    {
+      "id": "project-1",
+      "title": "Project One",
+      "slug": "project-one",
+      "description": "Descripción del proyecto",
+      "images": ["image1.webp", "image2.webp"],
+      "videos": ["video1.webm"]
+    },
+    {
+      "id": "project-2",
+      "title": "Project Two",
+      "slug": "project-two",
+      "description": "Otra descripción del proyecto",
+      "images": ["image3.webp", "image1.webp"],
+      "videos": ["video1.webm"]
+    }
+  ]
+  
